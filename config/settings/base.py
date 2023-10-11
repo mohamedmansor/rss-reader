@@ -336,3 +336,6 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+MAX_RETRY_FEED_UPDATES = env.int("MAX_RETRY_FEED_UPDATES", 3)
+RETRY_DELAY_IN_SECONDS = env.int("RETRY_DELAY_IN_SECONDS", 10)
