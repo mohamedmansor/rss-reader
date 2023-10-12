@@ -279,3 +279,5 @@ rrs_reader/media/
 .env
 .envs/*
 !.envs/.local/
+
+.vscode

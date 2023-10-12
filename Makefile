@@ -46,8 +46,11 @@ urls:
 logs:
 	docker compose -f local.yml logs -f $(filter-out $@,$(MAKECMDGOALS))
 
-test:
+test_local:
 	docker compose -f local.yml exec django /entrypoint python manage.py test --settings=config.settings.test $(filter-out $@,$(MAKECMDGOALS))
+
+test:
+	docker compose -f local.yml run --service-ports --rm -e DEBUGGER=True -e --settings=config.settings.test django python manage.py test $(filter-out $@,$(MAKECMDGOALS))
 
 down:
 	docker compose -f local.yml down $(filter-out $@,$(MAKECMDGOALS))
