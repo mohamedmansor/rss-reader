@@ -3,6 +3,7 @@ import logging
 import feedparser
 from dateutil import parser
 from django.core.mail import send_mail
+from rrs_reader.feed.exceptions import FeedException
 from django.utils import timezone
 
 from rrs_reader.feed.models import Feed, Post
@@ -34,9 +35,17 @@ class FeedService:
             parsed (dict): Parsed object for this RSS link
         """
         link = self.feed.xml_url
-        return feedparser.parse(link)
+        parsed_data = feedparser.parse(link)
+        if parsed_data.get("bozo_exception"):
+            msg = 'Found Malformed feed, "%s": %s' % (parsed_data.get("href"), parsed_data.get("bozo_exception"))
+            logger.warning(msg)
+            raise FeedException(details=msg)
+        return parsed_data
 
     def _prepare_feed_fields(self, feed_dict):
+        if not ["link", "title", "subtitle"] in feed_dict.keys():
+            raise FeedException(details="Feed attributes are not valid")
+
         fields = {
             "title": feed_dict.get("title"),
             "link": feed_dict.get("link"),
@@ -55,6 +64,9 @@ class FeedService:
             fields (dict): All needed fields to create an post object
 
         """
+        if not ["link", "title", "summary", "published"] in post_entity.keys():
+            raise FeedException(details="Post attributes are not valid")
+
         fields = {
             "title": post_entity.get("title"),
             "description": post_entity.get("summary"),
@@ -94,6 +106,7 @@ class FeedService:
 
 
 class NotificationService:
+    @staticmethod
     def notify(user, subject, message):
         """
         Send email notification to the user
