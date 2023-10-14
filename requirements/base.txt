@@ -25,3 +25,4 @@ drf-spectacular==0.26.5  # https://github.com/tfranzel/drf-spectacular
 
 # third party
 feedparser==6.0.10  # https://github.com/kurtmckee/feedparser
+django-filter==23.3  # https://github.com/carltongibson/django-filter/tree/main

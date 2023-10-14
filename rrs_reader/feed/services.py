@@ -43,8 +43,6 @@ class FeedService:
         return parsed_data
 
     def _prepare_feed_fields(self, feed_dict):
-        if not ["link", "title", "subtitle"] in feed_dict.keys():
-            raise FeedException(details="Feed attributes are not valid")
 
         fields = {
             "title": feed_dict.get("title"),
@@ -64,9 +62,6 @@ class FeedService:
             fields (dict): All needed fields to create an post object
 
         """
-        if not ["link", "title", "summary", "published"] in post_entity.keys():
-            raise FeedException(details="Post attributes are not valid")
-
         fields = {
             "title": post_entity.get("title"),
             "description": post_entity.get("summary"),
