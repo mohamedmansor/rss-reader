@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from django.core.validators import ValidationError
 
@@ -78,8 +77,9 @@ class Post(TimeStampedModel):
         user_feed = UserFeed.objects.filter(user=user, feed=self.feed).last()
         if self in user_feed.read_posts.all():
             raise ValidationError(_("You've already marked this feed post as read."))
+
         user_feed.read_posts.add(self)
-        user_feed.save(update_fields=["read_posts"])
+        user_feed.save()
 
     def mark_as_unread(self, user):
         """
@@ -98,7 +98,7 @@ class Post(TimeStampedModel):
         if not self in user_feed.read_posts.all():
             raise ValidationError(_("You've already marked this feed post as unread."))
         user_feed.read_posts.remove(self)
-        user_feed.save(update_fields=["read_posts"])
+        user_feed.save()
 
     def mark_all_read(self, user):
         """
@@ -111,7 +111,7 @@ class Post(TimeStampedModel):
             None
         """
         user_feed = UserFeed.objects.filter(user=user, feed=self.feed).last()
-        user_feed.read_posts.add(self.feed.posts.all())
+        user_feed.read_posts.add(*[post for post in self.feed.posts.all()])
 
     def mark_all_unread(self, user):
         """
