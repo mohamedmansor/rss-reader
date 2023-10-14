@@ -15,9 +15,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("rrs_reader.users.urls", namespace="users")),
-    # Feed management
-    path("feeds/v1/", include("rrs_reader.feed.urls", namespace="feeds")),
-
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -37,6 +34,8 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+    path('api/v1/feeds/', include('rrs_reader.feed.urls')),
+
 ]
 
 if settings.DEBUG:

@@ -67,10 +67,6 @@ class FeedViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retriev
 
         instance = self.get_object()
 
-        # TODO Remove This condition and use .follow() to avoid extra query
-        if instance.is_followed_by_user(self.request.user):
-            raise ValidationError({"non_field_errors": [_("You've already followed this feed.")]})
-
         instance.follow(self.request.user)
         return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)
 
@@ -88,9 +84,6 @@ class FeedViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retriev
             - `403 Forbidden` if the user is anonymous.
         """
         instance = self.get_object()
-
-        if not instance.is_followed_by_user(self.request.user):
-            raise ValidationError({"non_field_errors": [_("You're not following this feed.")]})
 
         instance.unfollow(self.request.user)
         return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)
@@ -117,7 +110,7 @@ class FeedViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retriev
         refresh_feed.delay(instance.id)
         return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=["GET"])
+    @action(detail=True, methods=["GET"], url_path="posts")
     def posts(self, request, *args, **kwargs):
         """
         Enables authenticated users to retrieve a paginated list of posts related to the passed feed ID.
@@ -132,7 +125,7 @@ class FeedViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retriev
         """
         instance = self.get_object()
         posts_queryset = instance.posts.all()
-        serializer = PostSerializer(posts_queryset, many=True)
+        serializer = PostOutputSerializer(posts_queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -153,7 +146,7 @@ class PostViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewS
         """
         :return: all the feeds posts registered by the authenticated user.
         """
-        return self.queryset.filter(feed__user=self.request.user)
+        return self.queryset.filter(feed__creator=self.request.user)
 
     @action(detail=True, methods=["POST"], url_path="mark-as-read")
     def mark_as_read(self, request, *args, **kwargs):
@@ -169,7 +162,7 @@ class PostViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewS
             - `403 Forbidden` if the user is anonymous.
         """
         instance = self.get_object()
-        instance.mark_as_read()
+        instance.mark_as_read(self.request.user)
         return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["POST"], url_path="mark-as-unread")
@@ -186,5 +179,5 @@ class PostViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewS
             - `403 Forbidden` if the user is anonymous.
         """
         instance = self.get_object()
-        instance.mark_as_unread()
+        instance.mark_as_unread(self.request.user)
         return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)

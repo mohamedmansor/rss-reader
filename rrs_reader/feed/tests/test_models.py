@@ -3,7 +3,8 @@ from django.test import TestCase
 from rrs_reader.feed.tests.factories import FeedFactory, UserFeedFactory, PostFactory
 from rrs_reader.users.tests.factories import UserFactory
 
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 
 
 class TestFeedModel(TestCase):
@@ -24,11 +25,6 @@ class TestFeedModel(TestCase):
     def test_activate_auto_refresh(self):
         self.feed.activate_auto_refresh()
         self.assertTrue(self.feed.auto_refresh)
-
-    def test_is_followed_by_user(self):
-        self.assertFalse(self.feed.is_followed_by_user(self.user))
-        UserFeedFactory.create(user=self.user, feed=self.feed)
-        self.assertTrue(self.feed.is_followed_by_user(self.user))
 
     def test_follow(self):
         self.feed.follow(self.user)
