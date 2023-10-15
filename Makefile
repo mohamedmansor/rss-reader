@@ -55,5 +55,8 @@ test:
 down:
 	docker compose -f local.yml down $(filter-out $@,$(MAKECMDGOALS))
 
+deploy:
+	docker compose -f production.yml up $(filter-out $@,$(MAKECMDGOALS))
+
 destroy:
 	docker compose -f local.yml down -v

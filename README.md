@@ -1,78 +1,90 @@
-# RRS_Reader
+# RRS Reader
 
-Rss Scraper app based on DRF
+API Based app that scrap rrs link, creates feed and posts
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+
 License: MIT
 
-## Settings
+## Stack Used
 
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
++ Docker
++ Docker Compose
++ PostgreSQL
++ Redis
++ Python
++ Django Rest Framework v. 3.13.1
++ Celery v. 5.2.3
++ Celery Beat v. 2.2.1
++ Flower v. 1.0.0
++ Mailpit (Locally)
+
+## Docker
+
+- Docker; if you don’t have it yet, follow the [installation_instructions](https://docs.docker.com/install/#supported-platforms)
+
+- Docker Compose; refer to the official documentation for the [installation_guide](https://docs.docker.com/compose/install/)
+- See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
+
+
 
 ## Basic Commands
+Then you can build the environment, this can take a while especially the first time you run this particular command on your development system:
+> If make command is not installed use `sudo apt install make` command to install it.
 
-### Setting Up Your Users
-
-- To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
-
-- To create a **superuser account**, use this command:
-
-      $ python manage.py createsuperuser
-
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
-
-### Type checks
-
-Running type checks with mypy:
-
-    $ mypy rrs_reader
-
-### Test coverage
-
-To run the tests, check your test coverage, and generate an HTML coverage report:
-
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
-
-#### Running tests with pytest
-
-    $ pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
 
 ```bash
-cd rrs_reader
-celery -A config.celery_app worker -l info
+    $ make build
 ```
 
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
-
+To run server normally command:
 ```bash
-cd rrs_reader
-celery -A config.celery_app beat
+    $ make up
 ```
 
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
-
+To open bash or excute any manage.py commands:
 ```bash
-cd rrs_reader
-celery -A config.celery_app worker -B -l info
+    $ make bash
 ```
 
-### Email Server
+To create superuser:
+```bash
+    $ make createsuperuser
+```
+
+To make fast migration instead of opening bash:
+```bash
+    $ make makemigrations
+    $ make migrate
+```
+
+To run unittests (with running Django container):
+```bash
+    $ make test_local
+```
+
+To down the stack :
+```bash
+    $ make down
+```
+
+## Flower
+
+In order to view celery tasks status and workers assigned to. Visit [flower page](http://0.0.0.0:5555/)
+
+#### Credentials:
+```
+FLOWER_USER = YRlBlTRxboEMyjZWiHKHtMZUurfgZnvk
+FLOWER_PASSWORD = kIKWW2F7lupL1uphv8p9ND1tTTp4XWoywKXKRd9dqNRQKSOhC7Zkm1Y7fOdIDP2W
+```
+
+## API Swagger docs
+The app APIs follows OAS to make it easy to service consumer integration. [API Docs](http://0.0.0.0:8000/api/docs/)
+
+
+## Email Server
 
 In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [Mailpit](https://github.com/axllent/mailpit) with a web interface is available as docker container.
 
@@ -81,7 +93,7 @@ Please check [cookiecutter-django Docker documentation](http://cookiecutter-djan
 
 With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
 
-### Sentry
+## Sentry
 
 Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
 The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
@@ -92,6 +104,16 @@ You must set the DSN url in production.
 
 The following details how to deploy this application.
 
-### Docker
+## What's Next?
+- Using caching on the GET APIs Views and ORM.
+    1. Cache on the ORM level using 3rd party package like: [Django Cacheops](https://github.com/Suor/django-cacheops)
+    2. Cache on the View level using either the base DRF decorators.
+    3. Most importantly invalidate the cached results after any feed/item related updates.
+- Integrating scout APM.
++ Implementing an exponential backoff celery retry mechanism on the failed tasks.
++ Update `make deploy` command to deploy stack
 
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
+
+## License
+
+Open source licensed under the MIT license (see LICENSE file for details).
