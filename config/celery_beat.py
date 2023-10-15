@@ -3,8 +3,8 @@ from celery.schedules import crontab
 
 def setup_periodic_tasks(app):
     app.conf.beat_schedule = {
-        'refresh-feeds-and-posts': {
-            'task': 'rss_reader.feed.tasks.periodic_update_feeds_task',
-            'schedule': crontab(minute='*/1'),  # every 5 minutes
+        "refresh-feeds-and-posts": {
+            "task": "rss_reader.feed.tasks.periodic_update_feeds_task",
+            "schedule": crontab(minute="*/1"),  # every 5 minutes
         },
     }

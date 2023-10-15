@@ -1,23 +1,17 @@
+from django.utils.translation import gettext_lazy as _
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, status
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
-
-from django.utils.translation import gettext_lazy as _
-
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from django_filters.rest_framework import DjangoFilterBackend
-from rrs_reader.feed.filters import PostFilter
-
-from rrs_reader.feed.tasks import refresh_feed
-
 
 from rrs_reader.feed.api.serializers import (
-    FeedOutputSerializer,
     FeedInputSerializer,
-    PostOutputSerializer,
+    FeedOutputSerializer,
     PostInputSerializer,
+    PostOutputSerializer,
 )
+from rrs_reader.feed.filters import PostFilter
 from rrs_reader.feed.models import Feed, Post
 from rrs_reader.feed.tasks import refresh_feed
 

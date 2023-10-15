@@ -1,11 +1,9 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rrs_reader.feed.models import Feed, Post, UserFeed
-from rrs_reader.feed.tests.factories import UserFactory, FeedFactory, PostFactory, UserFeedFactory
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
+
+from rrs_reader.feed.models import UserFeed
+from rrs_reader.feed.tests.factories import FeedFactory, PostFactory, UserFactory
 
 
 class TestFeedViewSet(APITestCase):

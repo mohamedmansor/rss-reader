@@ -34,6 +34,7 @@ class Feed(TimeStampedModel):
         if not user_feed:
             raise ValidationError({"non_field_errors": _("You're not following this feed.")})
         user_feed.delete()
+
     class Meta:
         db_table = "feed"
         verbose_name = "Feed"
@@ -94,7 +95,7 @@ class Post(TimeStampedModel):
             None
         """
         user_feed = UserFeed.objects.filter(user=user, feed=self.feed).last()
-        if not self in user_feed.read_posts.all():
+        if self not in user_feed.read_posts.all():
             raise ValidationError({"non_field_errors": _("You've already marked this feed post as unread.")})
         user_feed.read_posts.remove(self)
         user_feed.save()

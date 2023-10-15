@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from rrs_reader.feed.models import Post, Feed
+from rrs_reader.feed.models import Feed, Post
 
 
 class FeedOutputSerializer(serializers.ModelSerializer):
@@ -20,9 +20,11 @@ class FeedInputSerializer(serializers.ModelSerializer):
 
 class PostInputSerializer(serializers.ModelSerializer):
     mark_as_read = serializers.BooleanField(default=False)
+
     class Meta:
         model = Post
         fields = ("id", "mark_as_read")
+
 
 class PostOutputSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,6 +1,7 @@
 import os
 
 from celery import Celery
+
 from .celery_beat import setup_periodic_tasks
 
 # set the default Django settings module for the 'celery' program.

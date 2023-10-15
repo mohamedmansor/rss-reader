@@ -24,9 +24,11 @@ class PostFactory(DjangoModelFactory):
     class Meta:
         model = Post
 
+
 class UserFeedFactory(DjangoModelFactory):
     feed = factory.SubFactory(FeedFactory)
     user = factory.SubFactory(UserFactory)
+
     class Meta:
         model = UserFeed
 

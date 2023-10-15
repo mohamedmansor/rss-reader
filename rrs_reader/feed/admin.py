@@ -1,18 +1,12 @@
 from django.contrib import admin
-from rrs_reader.feed.models import Feed, Post
 from django.utils.translation import gettext_lazy as _
+
+from rrs_reader.feed.models import Feed, Post
 
 
 class PostAdminInline(admin.StackedInline):
     model = Post
-    fields = (
-        "created",
-        "title",
-        "description",
-        "link",
-        "published_time",
-        "last_update"
-    )
+    fields = ("created", "title", "description", "link", "published_time", "last_update")
     readonly_fields = ["created", "last_update"]
     classes = ["collapse"]
 

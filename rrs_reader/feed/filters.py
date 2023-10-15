@@ -1,14 +1,14 @@
 from django_filters import rest_framework as filters
 
-from rrs_reader.feed.models import Feed, Post
+from rrs_reader.feed.models import Post
 
 
 class PostFilter(filters.FilterSet):
-    read = filters.BooleanFilter(method='_filter_read')
+    read = filters.BooleanFilter(method="_filter_read")
 
     class Meta:
         model = Post
-        fields = ['feed', "read"]
+        fields = ["feed", "read"]
 
     def _filter_read(self, queryset, name, value):
         """

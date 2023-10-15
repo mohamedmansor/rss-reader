@@ -34,8 +34,7 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
-    path('api/v1/feeds/', include('rrs_reader.feed.urls')),
-
+    path("api/v1/feeds/", include("rrs_reader.feed.urls")),
 ]
 
 if settings.DEBUG:

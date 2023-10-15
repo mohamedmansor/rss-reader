@@ -1,10 +1,9 @@
-from rrs_reader.feed.models import Feed, Post, UserFeed
 from django.test import TestCase
-from rrs_reader.feed.tests.factories import FeedFactory, UserFeedFactory, PostFactory
-from rrs_reader.users.tests.factories import UserFactory
-
-# from django.core.exceptions import ValidationError
 from rest_framework.exceptions import ValidationError
+
+from rrs_reader.feed.models import UserFeed
+from rrs_reader.feed.tests.factories import FeedFactory, PostFactory, UserFeedFactory
+from rrs_reader.users.tests.factories import UserFactory
 
 
 class TestFeedModel(TestCase):
@@ -45,21 +44,21 @@ class TestFeedModel(TestCase):
 
 class TestPostModel(TestCase):
     def setUp(self):
-        self.user = UserFactory.create(username='testuser', password='testpassword')
+        self.user = UserFactory.create(username="testuser", password="testpassword")
         self.feed = FeedFactory.create(
             creator=self.user,
-            title='Test Feed',
-            description='Test Description',
-            xml_url='https://example.com/feed.xml',
-            auto_refresh=True
+            title="Test Feed",
+            description="Test Description",
+            xml_url="https://example.com/feed.xml",
+            auto_refresh=True,
         )
         self.post = PostFactory.create(
             feed=self.feed,
-            title='Test Post',
-            description='Test Description',
-            link='https://example.com/post',
+            title="Test Post",
+            description="Test Description",
+            link="https://example.com/post",
             published_time=None,
-            last_update=None
+            last_update=None,
         )
         self.user_feed = UserFeedFactory.create(user=self.user, feed=self.feed)
         # self.user_feed.read_posts.add(self.post)
@@ -68,7 +67,7 @@ class TestPostModel(TestCase):
     def test_mark_as_read(self):
         self.post.mark_as_read(self.user)
         self.assertTrue(self.post in self.user_feed.read_posts.all())
-    
+
     def test_mark_read_post_as_read_raises_error(self):
         self.post.mark_as_read(self.user)
         with self.assertRaises(ValidationError):
@@ -90,4 +89,3 @@ class TestPostModel(TestCase):
     def test_mark_all_unread(self):
         self.post.mark_all_unread(self.user)
         self.assertEqual(self.user_feed.read_posts.count(), 0)
-

@@ -3,9 +3,9 @@ import logging
 import feedparser
 from dateutil import parser
 from django.core.mail import send_mail
-from rrs_reader.feed.exceptions import FeedException
 from django.utils import timezone
 
+from rrs_reader.feed.exceptions import FeedException
 from rrs_reader.feed.models import Feed, Post
 
 logger = logging.getLogger(__name__)
@@ -37,13 +37,12 @@ class FeedService:
         link = self.feed.xml_url
         parsed_data = feedparser.parse(link)
         if parsed_data.get("bozo_exception"):
-            msg = 'Found Malformed feed, "%s": %s' % (parsed_data.get("href"), parsed_data.get("bozo_exception"))
+            msg = 'Found Malformed feed, "{}": {}'.format(parsed_data.get("href"), parsed_data.get("bozo_exception"))
             logger.warning(msg)
             raise FeedException(details=msg)
         return parsed_data
 
     def _prepare_feed_fields(self, feed_dict):
-
         fields = {
             "title": feed_dict.get("title"),
             "link": feed_dict.get("link"),
