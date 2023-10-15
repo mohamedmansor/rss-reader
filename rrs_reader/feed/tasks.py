@@ -1,13 +1,13 @@
-import logging
 import json
+import logging
 
-from celery import shared_task, group
+from celery import group, shared_task
 from celery.exceptions import MaxRetriesExceededError
-from rrs_reader.feed.services import FeedService, NotificationService
-from rrs_reader.feed.models import Feed
 from django.conf import settings
-from rrs_reader.feed.exceptions import FeedException
 
+from rrs_reader.feed.exceptions import FeedException
+from rrs_reader.feed.models import Feed
+from rrs_reader.feed.services import FeedService, NotificationService
 
 logger = logging.getLogger(__name__)
 
@@ -38,15 +38,17 @@ def refresh_feed(feed_id):
     try:
         feed_svc = FeedService(feed)
         feed_svc.update_feed()
+        updated_feed_ids.append(feed_id)
     except FeedException:
         try:
             refresh_feed.retry()
         except MaxRetriesExceededError:
             feed.deactivate_auto_refresh()
-            NotificationService.send_notification(
+            failed_feed_ids.append(feed_id)
+            NotificationService.notify(
                 user=feed.creator,
                 subject="Feed has exceeded the max number of retries",
                 message=f"Feed with id: {feed.id} has exceeded the max number of retries.",
             )
             logger.error(f"Updating feed with id: {feed.id} has exceeded the max number of retries. ")
-    return json.dumps({"detail": "Updated Feed: %s, Failed Feed: %s " % (updated_feed_ids, len(failed_feed_ids))})
+    return json.dumps({"detail": f"Updated Feed: {updated_feed_ids}, Failed Feed: {len(failed_feed_ids)} "})

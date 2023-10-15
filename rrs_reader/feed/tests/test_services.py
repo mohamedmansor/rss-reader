@@ -3,9 +3,9 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.utils import timezone
 
-from rrs_reader.feed.models import Feed, Post
+from rrs_reader.feed.models import Post
 from rrs_reader.feed.services import FeedService
-from rrs_reader.feed.tests.factories import FeedFactory, PostFactory
+from rrs_reader.feed.tests.factories import FeedFactory
 
 
 class FeedServiceTestCase(TestCase):
