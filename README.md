@@ -110,7 +110,6 @@ The following details how to deploy this application.
     2. Cache on the View level using either the base DRF decorators.
     3. Most importantly invalidate the cached results after any feed/item related updates.
 - Integrating scout APM.
-+ Implementing an exponential backoff celery retry mechanism on the failed tasks.
 + Update `make deploy` command to deploy stack
 
 
