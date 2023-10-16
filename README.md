@@ -115,6 +115,8 @@ FLOWER_PASSWORD = kIKWW2F7lupL1uphv8p9ND1tTTp4XWoywKXKRd9dqNRQKSOhC7Zkm1Y7fOdIDP
 ## API Swagger docs
 
 The app APIs follows OAS to make it easy to service consumer integration. [API Docs](http://0.0.0.0:8000/api/docs/)
+> NOTE you should up the stack using the above `$ make up` command to be able to view the DOCs
+
 
 ## Email Server
 
