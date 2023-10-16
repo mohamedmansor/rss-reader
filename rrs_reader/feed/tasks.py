@@ -25,11 +25,11 @@ def periodic_update_feeds_task():
     group(refresh_feed.s(feed_id) for feed_id in feeds).apply_async()
 
 
-# TODO Backoff 2, 5, 8)
 @shared_task(
-    autoretry_for=(Exception,),
+    autoretry_for=(FeedException,),
     retry_kwargs={"max_retries": settings.MAX_RETRY_FEED_UPDATES},
-    retry_backoff=settings.RETRY_DELAY_IN_SECONDS,
+    retry_backoff=settings.RETRY_BACKOFF_IN_SECONDS,
+    retry_backoff_max=settings.RETRY_BACKOFF_MAX,
 )
 def refresh_feed(feed_id):
     updated_feed_ids = []
