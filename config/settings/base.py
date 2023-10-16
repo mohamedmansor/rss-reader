@@ -345,5 +345,5 @@ SPECTACULAR_SETTINGS = {
 # ------------------------------------------------------------------------------
 
 MAX_RETRY_FEED_UPDATES = env.int("MAX_RETRY_FEED_UPDATES", 3)
-RETRY_BACKOFF_IN_SECONDS = env.int("RETRY_BACKOFF_IN_SECONDS", 120) # 120 seconds = 2 minutes
-RETRY_BACKOFF_MAX = env.int("RETRY_BACKOFF_MAX", 480) # 480 seconds = 8 minutes
+RETRY_BACKOFF_IN_SECONDS = env.int("RETRY_BACKOFF_IN_SECONDS", 120)  # 120 seconds = 2 minutes
+RETRY_BACKOFF_MAX = env.int("RETRY_BACKOFF_MAX", 480)  # 480 seconds = 8 minutes
