@@ -203,3 +203,10 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# APM
+SCOUT_MONITOR = env.bool("SCOUT_MONITOR", default=True)
+SCOUT_KEY = env.str("SCOUT_KEY", default="")
+SCOUT_NAME = env.str("SCOUT_NAME", default="RRS Reader Production")
+
+INSTALLED_APPS = ["scout_apm.django"] + INSTALLED_APPS
