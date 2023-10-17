@@ -272,7 +272,7 @@ tags
 dump.rdb
 
 ### Project template
-rrs_reader/media/
+rss_reader/media/
 
 .pytest_cache/
 .ipython/

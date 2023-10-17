@@ -1,4 +1,4 @@
-# Translations for the RRS_Reader project
+# Translations for the RSS_Reader project
 # Copyright (C) 2023 Mohamed Mansour
 # Mohamed Mansour <mohamedmansor212@gmail.com>, 2023.
 #

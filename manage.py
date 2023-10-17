@@ -24,8 +24,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # rrs_reader directory.
+    # rss_reader directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "rrs_reader"))
+    sys.path.append(str(current_path / "rss_reader"))
 
     execute_from_command_line(sys.argv)

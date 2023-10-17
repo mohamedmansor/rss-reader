@@ -6,8 +6,8 @@ from pathlib import Path
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# rrs_reader/
-APPS_DIR = BASE_DIR / "rrs_reader"
+# rss_reader/
+APPS_DIR = BASE_DIR / "rss_reader"
 env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -85,8 +85,8 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "rrs_reader.users",
-    "rrs_reader.feed",
+    "rss_reader.users",
+    "rss_reader.feed",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -95,7 +95,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "rrs_reader.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "rss_reader.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -188,7 +188,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "rrs_reader.users.context_processors.allauth_settings",
+                "rss_reader.users.context_processors.allauth_settings",
             ],
         },
     }
@@ -307,13 +307,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "rrs_reader.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "rss_reader.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {"signup": "rrs_reader.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "rss_reader.users.forms.UserSignupForm"}
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "rrs_reader.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "rss_reader.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-SOCIALACCOUNT_FORMS = {"signup": "rrs_reader.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "rss_reader.users.forms.UserSocialSignupForm"}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
@@ -336,8 +336,8 @@ CORS_URLS_REGEX = r"^/api/.*$"
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
-    "TITLE": "RRS_Reader API",
-    "DESCRIPTION": "Documentation of API endpoints of RRS_Reader",
+    "TITLE": "RSS_Reader API",
+    "DESCRIPTION": "Documentation of API endpoints of RSS_Reader",
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }

@@ -3,7 +3,7 @@
 
 API Based app that scrap rss link, creates feed and posts
 
-[![GitHub Actions](https://github.com/mohamedmansor/rrs-reader/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mohamedmansor/rrs-reader/actions?workflow=CI)
+[![GitHub Actions](https://github.com/mohamedmansor/rss-reader/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mohamedmansor/rss-reader/actions?workflow=CI)
  [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/) [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black) [![python](https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 ## Stack Used
@@ -143,7 +143,7 @@ Update `.env/.production/.django` with the following settings
 
 SCOUT_MONITOR=True
 SCOUT_KEY=<YOUR_SCOUT_KEY>
-SCOUT_NAME=RRS Reader Production
+SCOUT_NAME=RSS Reader Production
 
 ```
 

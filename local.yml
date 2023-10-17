@@ -1,16 +1,16 @@
 version: '3'
 
 volumes:
-  rrs_reader_local_postgres_data: {}
-  rrs_reader_local_postgres_data_backups: {}
+  rss_reader_local_postgres_data: {}
+  rss_reader_local_postgres_data_backups: {}
 
 services:
   django: &django
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: rrs_reader_local_django
-    container_name: rrs_reader_local_django
+    image: rss_reader_local_django
+    container_name: rss_reader_local_django
     depends_on:
       - postgres
       - redis
@@ -28,17 +28,17 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: rrs_reader_production_postgres
-    container_name: rrs_reader_local_postgres
+    image: rss_reader_production_postgres
+    container_name: rss_reader_local_postgres
     volumes:
-      - rrs_reader_local_postgres_data:/var/lib/postgresql/data
-      - rrs_reader_local_postgres_data_backups:/backups
+      - rss_reader_local_postgres_data:/var/lib/postgresql/data
+      - rss_reader_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
 
   docs:
-    image: rrs_reader_local_docs
-    container_name: rrs_reader_local_docs
+    image: rss_reader_local_docs
+    container_name: rss_reader_local_docs
     build:
       context: .
       dockerfile: ./compose/local/docs/Dockerfile
@@ -47,25 +47,25 @@ services:
     volumes:
       - ./docs:/docs:z
       - ./config:/app/config:z
-      - ./rrs_reader:/app/rrs_reader:z
+      - ./rss_reader:/app/rss_reader:z
     ports:
       - '9000:9000'
     command: /start-docs
 
   mailpit:
     image: axllent/mailpit:v1.8
-    container_name: rrs_reader_local_mailpit
+    container_name: rss_reader_local_mailpit
     ports:
       - "8025:8025"
 
   redis:
     image: redis:6
-    container_name: rrs_reader_local_redis
+    container_name: rss_reader_local_redis
 
   celeryworker:
     <<: *django
-    image: rrs_reader_local_celeryworker
-    container_name: rrs_reader_local_celeryworker
+    image: rss_reader_local_celeryworker
+    container_name: rss_reader_local_celeryworker
     depends_on:
       - redis
       - postgres
@@ -75,8 +75,8 @@ services:
 
   celerybeat:
     <<: *django
-    image: rrs_reader_local_celerybeat
-    container_name: rrs_reader_local_celerybeat
+    image: rss_reader_local_celerybeat
+    container_name: rss_reader_local_celerybeat
     depends_on:
       - redis
       - postgres
@@ -86,8 +86,8 @@ services:
 
   flower:
     <<: *django
-    image: rrs_reader_local_flower
-    container_name: rrs_reader_local_flower
+    image: rss_reader_local_flower
+    container_name: rss_reader_local_flower
     ports:
       - '5555:5555'
     command: /start-flower
