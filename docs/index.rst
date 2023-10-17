@@ -1,9 +1,9 @@
-.. RRS_Reader documentation master file, created by
+.. RSS_Reader documentation master file, created by
    sphinx-quickstart.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to RRS_Reader's documentation!
+Welcome to RSS_Reader's documentation!
 ======================================================================
 
 .. toctree::

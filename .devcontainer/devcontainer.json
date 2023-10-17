@@ -1,6 +1,6 @@
 // For format details, see https://containers.dev/implementors/json_reference/
 {
-    "name": "rrs_reader_dev",
+    "name": "rss_reader_dev",
     "dockerComposeFile": [
         "../local.yml"
     ],

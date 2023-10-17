@@ -88,10 +88,10 @@ aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws
 # ------------------------
 STORAGES = {
     "default": {
-        "BACKEND": "rrs_reader.utils.storages.MediaS3Storage",
+        "BACKEND": "rss_reader.utils.storages.MediaS3Storage",
     },
     "staticfiles": {
-        "BACKEND": "rrs_reader.utils.storages.StaticS3Storage",
+        "BACKEND": "rss_reader.utils.storages.StaticS3Storage",
     },
 }
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
@@ -105,14 +105,14 @@ MEDIA_URL = f"https://{aws_s3_domain}/media/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    default="RRS_Reader <noreply@example.com>",
+    default="RSS_Reader <noreply@example.com>",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
 EMAIL_SUBJECT_PREFIX = env(
     "DJANGO_EMAIL_SUBJECT_PREFIX",
-    default="[RRS_Reader] ",
+    default="[RSS_Reader] ",
 )
 
 # ADMIN
@@ -207,6 +207,6 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 # APM
 SCOUT_MONITOR = env.bool("SCOUT_MONITOR", default=True)
 SCOUT_KEY = env.str("SCOUT_KEY", default="")
-SCOUT_NAME = env.str("SCOUT_NAME", default="RRS Reader Production")
+SCOUT_NAME = env.str("SCOUT_NAME", default="RSS Reader Production")
 
 INSTALLED_APPS = ["scout_apm.django"] + INSTALLED_APPS

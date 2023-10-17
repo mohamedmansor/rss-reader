@@ -27,7 +27,7 @@ django.setup()
 
 # -- Project information -----------------------------------------------------
 
-project = "RRS_Reader"
+project = "RSS_Reader"
 copyright = """2023, Mohamed Mansour"""
 author = "Mohamed Mansour"
 
