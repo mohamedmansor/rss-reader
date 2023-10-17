@@ -32,6 +32,11 @@ jobs:
       # Consider using pre-commit.ci for open source project
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
+      # Codecov Action 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   pytest:
@@ -52,3 +57,5 @@ jobs:
 
       - name: Tear down the Stack
         run: docker compose -f local.yml down
+  
+  
