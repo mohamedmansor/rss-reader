@@ -16,8 +16,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements .
 
-# Export poetry lock file to requirements.txt
-RUN poetry export -f requirements.txt > requirements.txt
 # Create Python Dependency and Sub-Dependency Wheels.
 RUN pip wheel --wheel-dir /usr/src/app/wheels  \
   -r requirements.txt
