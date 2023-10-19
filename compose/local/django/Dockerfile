@@ -18,8 +18,9 @@ COPY ./requirements .
 
 # Export poetry lock file to requirements.txt
 RUN poetry export -f requirements.txt > requirements.txt
-# Requirements are installed here to ensure they will be cached.
-# No changes needed here as the requirements are installed in a different way.
+# Create Python Dependency and Sub-Dependency Wheels.
+RUN pip wheel --wheel-dir /usr/src/app/wheels  \
+  -r requirements.txt
 
 
 # Python 'run' stage
@@ -60,8 +61,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # copy python dependency wheels from python-build-stage
 COPY --from=python-build-stage /usr/src/app/wheels  /wheels/
 
-# Install Python dependencies using poetry
-RUN poetry install
+# use wheels to install python dependencies
+RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
+  && rm -rf /wheels/
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
