@@ -50,7 +50,7 @@ test_local:
 	docker compose -f local.yml exec django /entrypoint python manage.py test --settings=config.settings.test $(filter-out $@,$(MAKECMDGOALS))
 
 pytest:
-	docker compose -f local.yml run django pytest
+	docker compose -f local.yml run django pytest $(filter-out $@,$(MAKECMDGOALS))
 
 test:
 	docker compose -f local.yml run --service-ports --rm -e DEBUGGER=True -e --settings=config.settings.test django python manage.py test $(filter-out $@,$(MAKECMDGOALS))

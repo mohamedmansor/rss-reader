@@ -3,6 +3,7 @@
 
 API Based app that scraps RSS links, creates feeds, and posts
 
+[![codecov.io](https://codecov.io/github/mohamedmansor/rss-reader/coverage.svg?branch=main)](https://codecov.io/github/mohamedmansor/rss-reader?branch=main)
 [![GitHub Actions](https://github.com/mohamedmansor/rss-reader/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mohamedmansor/rss-reader/actions?workflow=CI)
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
